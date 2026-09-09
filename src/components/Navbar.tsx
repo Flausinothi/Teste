@@ -8,9 +8,9 @@ interface Props {
 
 export default function Navbar({ activeTab, setActiveTab, ownerName }: Props) {
   const tabs: { key: Tab; label: string }[] = [
-    { key: "resume", label: "Currículo" },
-    { key: "certificates", label: "Certificados" },
-    { key: "cronogram", label: "Cronograma"}
+    { key: "resume",        label: "Currículo" },
+    { key: "certificates",  label: "Certificados" },
+    { key: "cronogram",     label: "Cronograma" }
   ];
 
   return (
