@@ -4,7 +4,7 @@ import { ScrollControls, useScroll, Text } from "@react-three/drei";
 import * as THREE from "three";
 
 const dadosEtapas = [
-  { ano: 2010, porcentagem: 0,   legenda: "Ensino Fundamental" },
+  { ano: 2010, porcentagem: 0,    legenda: "Ensino Fundamental" },
   { ano: 2013, porcentagem: 15,   legenda: "Ensino Médio" },
   { ano: 2018, porcentagem: 25,   legenda: "Faculdade" },
   { ano: 2022, porcentagem: 50,   legenda: "Primeira Pós-Graduação" },
