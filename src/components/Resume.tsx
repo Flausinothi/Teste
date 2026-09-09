@@ -24,8 +24,7 @@ export default function Resume({ data }: Props) {
           <ContactRow icon="✉" label={data.email} href={`mailto:${data.email}`} />
           <ContactRow icon="☏" label={data.phone} />
           <ContactRow icon="⌖" label={data.location} />
-          {data.linkedin && <ContactRow icon="in" label={data.linkedin} href={`https://${data.linkedin}`} />}
-          {data.github && <ContactRow icon="⚖" label={data.github} />}
+          <ContactRow icon="in" label={data.linkedin} href={`https://${data.linkedin}`} />
         </div>
       </aside>
 

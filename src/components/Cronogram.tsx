@@ -1,27 +1,29 @@
 import { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { ScrollControls, useScroll, Text } from "@react-three/drei";
 import * as THREE from "three";
 
 const dadosEtapas = [
-  { ano: 2010, porcentagem: 10, legenda: "Ensino Fundamental" },
-  { ano: 2013, porcentagem: 15, legenda: "Ensino Médio" },
-  { ano: 2018, porcentagem: 25, legenda: "Faculdade" },
-  { ano: 2022, porcentagem: 50, legenda: "Primeiro Emprego" },
+  { ano: 2010, porcentagem: 0,   legenda: "Ensino Fundamental" },
+  { ano: 2013, porcentagem: 15,   legenda: "Ensino Médio" },
+  { ano: 2018, porcentagem: 25,   legenda: "Faculdade" },
+  { ano: 2022, porcentagem: 50,   legenda: "Primeira Pós-Graduação" },
+  { ano: 2026, porcentagem: 100,  legenda: "Segunda Pós-Graduação" },
 ];
 
 function GraficoLinha3D() {
   const scroll = useScroll();
   const grupoRef = useRef<THREE.Group>(null);
-  const espacamentoX = 10;
+  const { viewport } = useThree();
+  const espacamentoX = viewport.width * 0.8;
 
   const pontos = useMemo(() => {
     return dadosEtapas.map((etapa, index) => {
       const x = index * espacamentoX;
-      const y = (etapa.porcentagem / 100) * 3;
+      const y = (etapa.porcentagem / 100) * 2.5;
       return new THREE.Vector3(x, y, 0);
     });
-  }, []);
+  }, [espacamentoX]);
 
   const curva = useMemo(() => new THREE.CatmullRomCurve3(pontos), [pontos]);
 
@@ -43,7 +45,7 @@ function GraficoLinha3D() {
     <group ref={grupoRef} position={[0, -0.5, 0]}>
       <mesh>
         <tubeGeometry args={[curva, 64, 0.05, 8, false]} />
-        <meshBasicMaterial color="#c9a96e" />
+        <meshBasicMaterial color="#fde68a" />
       </mesh>
 
       {dadosEtapas.map((etapa, index) => {
@@ -75,7 +77,7 @@ function GraficoLinha3D() {
 export default function Cronogram() {
   return (
     <div className="min-h-screen bg-[#0d1117] pt-24 pb-16">
-      <div className="max-w-4xl mx-auto px-6 lg:px-10">
+      <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <div className="mb-10">
           <h1 className="font-serif text-3xl text-zinc-100">Cronograma</h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -83,14 +85,13 @@ export default function Cronogram() {
           </p>
         </div>
 
-        <div className="rounded-2xl overflow-hidden border border-white/8 bg-[#080c12]" style={{ height: 400 }}>
-          <Canvas camera={{ position: [0, 0.5, 5], fov: 50 }}>
+        <div className="w-full rounded-2xl overflow-hidden border border-white/8 bg-[#080c12]" style={{ height: 400 }}>
+          <Canvas camera={{ position: [0, 0.8, 6], fov: 50 }}>
             <ScrollControls pages={dadosEtapas.length} distance={1} horizontal damping={0.3}>
               <GraficoLinha3D />
             </ScrollControls>
           </Canvas>
-        </div>
-
+        </div> 
         <p className="mt-4 text-center text-zinc-600 text-xs">
           Role o mouse ou arraste dentro do gráfico para navegar pela linha do tempo.
         </p>
